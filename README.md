@@ -223,6 +223,3 @@ SeniorityBonusDecorator   PerformanceBonusDecorator
 4. **Integración con sistemas externos**: ERP, nómina electrónica
 5. **API REST**: Exponer funcionalidades como microservicios
 
----
-
-**Nota**: Este sistema es un ejemplo educativo que demuestra buenas prácticas de diseño, arquitectura limpia y patrones de diseño en un contexto empresarial real.
