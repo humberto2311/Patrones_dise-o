@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,7 +27,7 @@ public class SalaryController {
 
     @GetMapping("/employee/{employeeId}")
     public ResponseEntity<List<SalaryHistoryDTO>> getSalaryHistoryByEmployee(@PathVariable Integer employeeId) {
-        List<SalaryHistory> historyList = salaryGet.getHistoryByEmployeeId(employeeId);
+        Optional<SalaryHistory> historyList = salaryGet.getHistoryByEmployeeId(employeeId);
         List<SalaryHistoryDTO> dtoList = historyList.stream()
                 .map(salaryMapper::toDTO)
                 .collect(Collectors.toList());
@@ -35,8 +36,8 @@ public class SalaryController {
 
     @GetMapping("/entry/{entryId}")
     public ResponseEntity<SalaryHistoryDTO> getSalaryEntry(@PathVariable Integer entryId) {
-        SalaryHistory history = salaryGet.getHistoryEntryById(entryId);
-        SalaryHistoryDTO dto = salaryMapper.toDTO(history);
+        Optional<SalaryHistory> history = salaryGet.getHistoryEntryById(entryId);
+        SalaryHistoryDTO dto = salaryMapper.toDTO(history.orElse(null));
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 
@@ -52,7 +53,7 @@ public class SalaryController {
     public ResponseEntity<SalaryHistoryDTO> updateSalaryEntry(@PathVariable Integer entryId,
                                                               @RequestBody SalaryHistoryDTO salaryHistoryDTO) {
 
-        SalaryHistory existingEntry = salaryGet.getHistoryEntryById(entryId);
+        Optional<SalaryHistory> existingEntry = salaryGet.getHistoryEntryById(entryId);
         if (existingEntry == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

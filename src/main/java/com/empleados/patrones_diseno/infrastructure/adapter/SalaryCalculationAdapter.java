@@ -20,7 +20,6 @@ public class SalaryCalculationAdapter implements CalculoSalarioStrategy.SalaryCa
     
     @Override
     public BigDecimal calculateSalary(Employee employee, int months) {
-        // Usar la estrategia basada en el tipo de empleado
         SalaryUpdateService.SalaryStrategyService strategy = SalaryStrategyFactory.createStrategy(employee.getEmployeeType());
         return strategy.calculate(employee, months);
     }
@@ -28,27 +27,21 @@ public class SalaryCalculationAdapter implements CalculoSalarioStrategy.SalaryCa
     @Override
     public void registerExtraHours(int employeeId, int hours) {
         employeeRepository.findById(employeeId).ifPresent(employeeDto -> {
-            // En un caso real, actualizarías las horas extras
-            // Por ahora solo lo dejamos como marcador de posición
             System.out.println("Registradas " + hours + " horas extras para empleado " + employeeId);
         });
     }
     
     @Override
     public BigDecimal calculateWithBonus(Employee employee, int months) {
-        // Calcular salario base
         SalaryUpdateService.SalaryStrategyService strategy = SalaryStrategyFactory.createStrategy(employee.getEmployeeType());
         BigDecimal baseSalary = strategy.calculate(employee, months);
-        
-        // Aplicar decoradores para bonificaciones
+
         SalaryCalculator calculator = new BaseSalaryCalculator(baseSalary);
-        
-        // Aplicar bonificación por antigüedad si aplica
+
         if (employee.getHireDate() != null) {
             calculator = new SeniorityBonusDecorator(calculator, employee.getHireDate());
         }
-        
-        // Aplicar bonificación por desempeño
+
         calculator = new PerformanceBonusDecorator(calculator);
         
         return calculator.calculate();

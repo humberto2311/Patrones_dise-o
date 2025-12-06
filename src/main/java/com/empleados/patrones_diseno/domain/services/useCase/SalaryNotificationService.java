@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class SalaryNotificationService implements CalculoSalarioStrategy.Notific
     }
 
     @Override
-    public void notifySalaryChange(SalaryHistory salaryHistory) {
+    public void notifySalaryChange(Optional<SalaryHistory> salaryHistory) {
         for (Object observer : observers) {
             if (observer instanceof EmailNotificationObserver) {
                 ((EmailNotificationObserver) observer).update(salaryHistory);

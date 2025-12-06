@@ -6,17 +6,18 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class SalaryGet {
     private final SalaryGetService salaryGetServicie;
 
-    public List<SalaryHistory> getHistoryByEmployeeId(int employeeId) {
+    public Optional<SalaryHistory> getHistoryByEmployeeId(int employeeId) {
         return salaryGetServicie.getHistoryByEmployeeId(employeeId);
     }
 
-    public SalaryHistory getHistoryEntryById(int entryId){
+    public Optional<SalaryHistory> getHistoryEntryById(int entryId){
         return salaryGetServicie.getHistoryEntryById(entryId);
     }
 }

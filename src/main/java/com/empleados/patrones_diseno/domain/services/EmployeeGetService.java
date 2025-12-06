@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmployeeGetService {
-    Employee saveEmployee(Employee employee);
 
     Optional<Employee> getEmployeeById(int id);
 

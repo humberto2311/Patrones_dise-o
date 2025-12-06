@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/roles")
@@ -25,8 +27,8 @@ public class RoleController {
 
     @GetMapping
     public ResponseEntity<RoleDTO> getRole(@RequestParam Integer id) {
-        Role role = roleGet.getRoleById(id);
-        return new ResponseEntity<>(roleMap.toDTO(role), HttpStatus.OK);
+        Optional<Role> role = roleGet.getRoleById(id);
+        return new ResponseEntity<>(roleMap.toDTO(role.orElse(null)), HttpStatus.OK);
     }
 
     @PostMapping
