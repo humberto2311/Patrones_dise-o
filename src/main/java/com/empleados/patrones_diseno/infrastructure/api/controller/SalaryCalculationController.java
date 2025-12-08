@@ -33,8 +33,12 @@ public class SalaryCalculationController {
     public ResponseEntity<Void> registerExtraHours(
             @PathVariable Integer employeeId,
             @RequestParam int hours) {
-        
-        calculateEmployeeSalaryUseCase.registerExtraHours(employeeId, hours);
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        try {
+            calculateEmployeeSalaryUseCase.registerExtraHours(employeeId, hours);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
