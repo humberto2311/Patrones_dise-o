@@ -61,7 +61,7 @@ class RoleControllerTest {
 
         RoleDTO dto = new RoleDTO(1, "Manager", new BigDecimal("4500.00"));
 
-        when(roleGet.getRoleById(1)).thenReturn(Optional.of(role));
+        when(roleGet.getRoleById(1)).thenReturn(role);
         when(roleMap.toDTO(role)).thenReturn(dto);
 
         mockMvc.perform(get("/roles?id=1"))
@@ -77,7 +77,7 @@ class RoleControllerTest {
     @Test
     void getRole_ReturnsNullDTO_WhenNotFound() throws Exception {
 
-        when(roleGet.getRoleById(99)).thenReturn(Optional.empty());
+        when(roleGet.getRoleById(99)).thenReturn(null);
         when(roleMap.toDTO(null)).thenReturn(null);
 
         mockMvc.perform(get("/roles?id=99"))

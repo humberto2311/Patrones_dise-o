@@ -3,6 +3,7 @@ package com.empleados.patrones_diseno.domain.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "SALARY_HISTORY")
 @Data
+@NoArgsConstructor
 public class SalaryHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
