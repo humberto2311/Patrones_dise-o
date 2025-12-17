@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -80,7 +82,7 @@ class SalaryControllerTest {
         SalaryHistoryDTO dto = buildDto();
 
         when(salaryGet.getHistoryByEmployeeId(10))
-                .thenReturn(Optional.of(entity));
+                .thenReturn(List.of(entity));
 
         when(salaryMapper.toDTO(entity)).thenReturn(dto);
 
@@ -101,7 +103,7 @@ class SalaryControllerTest {
         SalaryHistory entity = buildEntity();
         SalaryHistoryDTO dto = buildDto();
 
-        when(salaryGet.getHistoryEntryById(1)).thenReturn(Optional.of(entity));
+        when(salaryGet.getHistoryEntryById(1)).thenReturn(entity);
         when(salaryMapper.toDTO(entity)).thenReturn(dto);
 
         mockMvc.perform(get("/salaries/entry/1"))
@@ -114,7 +116,7 @@ class SalaryControllerTest {
     @Test
     void getSalaryEntry_ReturnsNull_WhenNotFound() throws Exception {
 
-        when(salaryGet.getHistoryEntryById(99)).thenReturn(Optional.empty());
+        when(salaryGet.getHistoryEntryById(99)).thenReturn(new SalaryHistory());
         when(salaryMapper.toDTO(null)).thenReturn(null);
 
         mockMvc.perform(get("/salaries/entry/99"))
@@ -158,7 +160,7 @@ class SalaryControllerTest {
     @Test
     void updateSalaryEntry_NotFound() throws Exception {
 
-        when(salaryGet.getHistoryEntryById(1)).thenReturn(Optional.empty());
+        when(salaryGet.getHistoryEntryById(1)).thenReturn(new SalaryHistory());
 
         String requestJson = """
             {
@@ -181,7 +183,7 @@ class SalaryControllerTest {
         SalaryHistory entity = buildEntity();
         SalaryHistoryDTO dto = buildDto();
 
-        when(salaryGet.getHistoryEntryById(1)).thenReturn(Optional.of(entity));
+        when(salaryGet.getHistoryEntryById(1)).thenReturn(new SalaryHistory());
         when(salaryMapper.toEntity(any())).thenReturn(entity);
         when(salarySave.saveSalary(entity)).thenReturn(entity);
         when(salaryMapper.toDTO(entity)).thenReturn(dto);
